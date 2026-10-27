@@ -10,15 +10,13 @@ jobs:
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: 21
+          java-version: 25
 
-      # Находим любой zip-архив в репозитории и распаковываем в корень
       - name: Unpack project archive
         run: |
           ZIP_FILE=$(find . -maxdepth 2 -name "*.zip" | head -n 1)
           if [ -n "$ZIP_FILE" ]; then
             unzip -o "$ZIP_FILE"
-            # Если распаковалось в подпапку fastutils, переносим всё в корень
             if [ -d "fastutils" ]; then
               cp -r fastutils/* . 2>/dev/null || true
             fi
@@ -28,7 +26,7 @@ jobs:
         run: chmod +x gradlew
 
       - name: Build with Gradle
-        run: ./gradlew build
+        run: ./gradlew build --continue
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
