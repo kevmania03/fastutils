@@ -10,12 +10,12 @@ jobs:
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: 21  # Для Minecraft модов обычно используется Java 21 (или 17/16 в зависимости от версии игры)
+          java-version: 21
       - name: Grant execute permission for gradlew
-        run: chmod +x gradlew
+        run: chmod +x fastutils/gradlew
       - name: Build with Gradle
-        run: ./gradlew build
+        run: cd fastutils && ./gradlew build
       - uses: actions/upload-artifact@v4
         with:
           name: fastutils-jar
-          path: build/libs/*.jar
+          path: fastutils/build/libs/*.jar
